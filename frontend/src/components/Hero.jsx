@@ -10,7 +10,7 @@ const heroCategories = [
   { img: photo('1581578731548-c64695cc6952'), label: 'Home Cleaning' },
   { img: photo('1600585154340-be6161a56a0c'), label: 'Deep Cleaning' },
   { img: photo('1527515637462-cff94eecc1ac'), label: 'Sofa & Carpet' },
-  { img: photo('1587349913856-3b9045fc06ba'), label: 'Pest Control' },
+  { img: '/pest-control.png', label: 'Pest Control' },
   { img: photo('1497366216548-37526070297c'), label: 'Office Cleaning' },
   { img: photo('1560518883-ce09059eeffa'), label: 'Bathroom Clean' },
 ];

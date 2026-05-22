@@ -84,7 +84,7 @@ const fallbackServices = [
     category: 'Pest Control',
     subcategory: 'Bed Bugs Control',
     features: ['Mattress seam steam extraction', 'Residual chemical defense layer'],
-    image: 'https://images.unsplash.com/photo-1587349913856-3b9045fc06ba?q=80&w=600&auto=format&fit=crop'
+    image: '/pest-control.png'
   },
   {
     _id: '7',

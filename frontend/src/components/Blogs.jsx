@@ -44,7 +44,7 @@ const Blogs = () => {
       seoTitle: 'Household Pest Identification and Solutions - Cleannes',
       seoDescription: 'Learn how to detect termites, bed bugs, and rodents early, apply home defense solutions, and arrange professional pest control.',
       seoKeywords: 'pest control, bed bugs, termite control, house inspection',
-      image: 'https://images.unsplash.com/photo-1587349913856-3b9045fc06ba?q=80&w=600&auto=format&fit=crop',
+      image: '/pest-control.png',
       createdAt: new Date().toISOString()
     }
   ];
