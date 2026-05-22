@@ -12,12 +12,12 @@ const pseudoRating = (id = '') => {
 
 const fallbackServices = [
   { _id: 'f1', name: 'Regular Domestic Cleaning', category: 'Deep Cleaning', price: 11999, image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop' },
-  { _id: 'f2', name: 'Carpet & Upholstery Cleaning', category: 'Deep Cleaning', price: 23999, image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=600&auto=format&fit=crop' },
-  { _id: 'f3', name: 'Window Washing Wizards', category: 'Deep Cleaning', price: 13999, image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=600&auto=format&fit=crop' },
+  { _id: 'f2', name: 'Carpet & Upholstery Cleaning', category: 'Deep Cleaning', price: 23999, image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?q=80&w=600&auto=format&fit=crop' },
+  { _id: 'f3', name: 'Window Washing Wizards', category: 'Deep Cleaning', price: 13999, image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop' },
   { _id: 'f4', name: 'After Building Cleaning', category: 'Deep Cleaning', price: 34999, image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=600&auto=format&fit=crop' },
   { _id: 'f5', name: 'Post-Construction Cleaning', category: 'Deep Cleaning', price: 49999, image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop' },
   { _id: 'f6', name: 'Bed Bugs Thermal Treatment', category: 'Pest Control', price: 19999, image: 'https://images.unsplash.com/photo-1587349913856-3b9045fc06ba?q=80&w=600&auto=format&fit=crop' },
-  { _id: 'f7', name: 'Termite Protection Barrier', category: 'Pest Control', price: 39999, image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=600&auto=format&fit=crop' },
+  { _id: 'f7', name: 'Termite Protection Barrier', category: 'Pest Control', price: 39999, image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop' },
 ];
 
 const AllServices = ({ onSelectService }) => {

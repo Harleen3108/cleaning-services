@@ -44,7 +44,7 @@ const fallbackServices = [
     category: 'Deep Cleaning',
     subcategory: 'Sofa & Carpet Cleaning',
     features: ['Hot water extraction treatment', 'Stain removal and deodorizing'],
-    image: 'https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?q=80&w=600&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?q=80&w=600&auto=format&fit=crop'
   },
   {
     _id: '3',
@@ -54,7 +54,7 @@ const fallbackServices = [
     category: 'Deep Cleaning',
     subcategory: 'Apartments Cleaning',
     features: ['Interior and exterior window glass cleaning', 'Sills, screens, and track vacuuming'],
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=600&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop'
   },
   {
     _id: '4',
@@ -94,7 +94,7 @@ const fallbackServices = [
     category: 'Pest Control',
     subcategory: 'Termite Control',
     features: ['Soil chemical barriers drilling', '5-year structural warranty'],
-    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=600&auto=format&fit=crop'
+    image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop'
   }
 ];
 
