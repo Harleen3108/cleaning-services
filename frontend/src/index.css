@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #692ca8; /* Urban Company purple */
+  --primary-hover: #54218a;
+  --primary-dark: #4a1d7a;
+  --secondary-color: #1c1c1c; /* Near-black headings (UC) */
+  --accent-color: #7c3aed; /* Violet accent */
+  --accent-soft: #f5eefc;  /* Light purple tint */
+  --yellow-color: #ffd000; /* Warm CTA accent */
+  --yellow-hover: #f5c400;
+  --bg-light: #ffffff;
+  --bg-section: #f7f7fa; /* UC soft gray section bg */
+  --border-color: #ededed;
+  --text-main: #4a4a4a;
+  --text-muted: #8c8c8c;
+  --white: #ffffff;
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-light);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+  color: var(--secondary-color);
+  font-weight: 700;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
