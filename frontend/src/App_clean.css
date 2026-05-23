@@ -121,7 +121,7 @@
 
 .logo-main {
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 800;
   color: #692ca8;
   letter-spacing: -0.5px;
   line-height: 1;
@@ -130,7 +130,7 @@
 .logo-sub {
   font-size: 0.65rem;
   letter-spacing: 2px;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--text-muted);
 }
 
@@ -142,7 +142,7 @@
 
 .nav-link-btn {
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--secondary-color);
   display: flex;
   align-items: center;
@@ -183,7 +183,7 @@
   padding: 0.6rem 1rem;
   border-radius: 30px;
   font-size: 0.85rem;
-  font-weight: 400;
+  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -239,7 +239,7 @@
 .get-quote-btn {
   background-color: var(--yellow-color);
   color: var(--secondary-color);
-  font-weight: 400;
+  font-weight: 700;
   font-size: 0.85rem;
   padding: 0.75rem 1.4rem;
   border-radius: 30px;
@@ -295,7 +295,7 @@
   color: var(--yellow-color);
   font-size: 0.9rem;
   letter-spacing: 2px;
-  font-weight: 400;
+  font-weight: 800;
   display: block;
   margin-bottom: 0.8rem;
 }
@@ -305,7 +305,7 @@
   line-height: 1.15;
   color: var(--white);
   margin-bottom: 1.5rem;
-  font-weight: 400;
+  font-weight: 800;
 }
 
 .hero-desc {
@@ -325,7 +325,7 @@
 .hero-primary-btn {
   background-color: var(--white);
   color: #692ca8;
-  font-weight: 400;
+  font-weight: 800;
   font-size: 0.9rem;
   padding: 1rem 1.8rem;
   border-radius: 30px;
@@ -366,7 +366,7 @@
 
 .phone-cta-num {
   font-size: 1.1rem;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--yellow-color);
 }
 
@@ -400,13 +400,13 @@
 
 .exp-num {
   font-size: 1.8rem;
-  font-weight: 500;
+  font-weight: 800;
   line-height: 1;
 }
 
 .exp-lbl {
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -441,6 +441,9 @@
 .about-image-montage {
   position: relative;
   height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .circle-image-container {
@@ -457,50 +460,46 @@
   object-fit: cover;
 }
 
-/* Large circle — dominates top-left */
 .img-primary {
   width: 260px;
   height: 260px;
-  top: 0;
-  left: 0;
-  z-index: 2;
-}
-
-/* Medium circle — overlaps below the large one (collage effect) */
-.img-secondary {
-  width: 205px;
-  height: 205px;
-  top: 175px;
-  left: 70px;
+  top: 10%;
+  left: 10%;
   z-index: 3;
 }
 
-/* Small accent circle — right side */
+.img-secondary {
+  width: 200px;
+  height: 200px;
+  bottom: 10%;
+  right: 15%;
+  z-index: 2;
+}
+
 .img-tertiary {
-  width: 130px;
-  height: 130px;
-  top: 45px;
-  right: 20px;
+  width: 160px;
+  height: 160px;
+  top: 40%;
+  left: 55%;
   z-index: 1;
 }
 
 .circle-image-decor {
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background-color: rgba(124, 58, 237, 0.07);
-  bottom: 20px;
-  right: 15px;
-  border: 2px dashed rgba(124, 58, 237, 0.25);
-  z-index: 0;
+  background-color: rgba(124, 58, 237, 0.08);
+  bottom: 15%;
+  left: 15%;
+  border: 2px dashed rgba(124, 58, 237, 0.3);
 }
 
 .section-label {
   color: #692ca8;
   font-size: 0.85rem;
   letter-spacing: 2px;
-  font-weight: 400;
+  font-weight: 800;
   margin-bottom: 0.5rem;
   display: block;
 }
@@ -531,7 +530,7 @@
   align-items: center;
   gap: 0.8rem;
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .feature-check {
@@ -548,7 +547,7 @@
 .about-readmore-btn {
   background-color: #692ca8;
   color: var(--white);
-  font-weight: 400;
+  font-weight: 700;
   font-size: 0.85rem;
   padding: 0.9rem 1.6rem;
   border-radius: 30px;
@@ -577,14 +576,14 @@
 
 .founder-name {
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--secondary-color);
 }
 
 .founder-title {
   font-size: 0.75rem;
   color: var(--text-muted);
-  font-weight: 400;
+  font-weight: 600;
 }
 
 /* ==========================================================================
@@ -613,7 +612,7 @@
   padding: 0.8rem 1.8rem;
   border-radius: 30px;
   font-size: 0.95rem;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--text-muted);
   transition: all 0.2s;
 }
@@ -675,7 +674,7 @@
 
 .sub-tab-name {
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.3;
 }
 
@@ -699,7 +698,7 @@
 
 .showcase-title {
   font-size: 2.4rem;
-  font-weight: 400;
+  font-weight: 800;
   color: var(--white);
   margin-bottom: 1.2rem;
   line-height: 1.15;
@@ -733,7 +732,7 @@
 
 .circle-price-val {
   font-size: 1.9rem;
-  font-weight: 400;
+  font-weight: 800;
   color: var(--white);
   line-height: 1;
 }
@@ -742,7 +741,7 @@
   font-size: 0.65rem;
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.7);
-  font-weight: 400;
+  font-weight: 700;
   margin-top: 4px;
   letter-spacing: 0.5px;
 }
@@ -750,7 +749,7 @@
 .showcase-learn-btn {
   background-color: var(--yellow-color);
   color: var(--secondary-color);
-  font-weight: 400;
+  font-weight: 800;
   font-size: 0.9rem;
   padding: 1.1rem 2.2rem;
   border-radius: 30px;
@@ -791,7 +790,7 @@
   padding: 0.6rem 1.2rem;
   border-radius: 20px;
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 700;
   letter-spacing: 0.5px;
 }
 
@@ -943,7 +942,7 @@
 .team-card p {
   font-size: 0.85rem;
   color: #692ca8;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 /* ==========================================================================
@@ -1009,7 +1008,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 0.95rem;
 }
 
@@ -1020,7 +1019,7 @@
 
 .author-name {
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .author-date {
@@ -1131,7 +1130,7 @@
   padding: 0.3rem 0.8rem;
   border-radius: 20px;
   font-size: 0.75rem;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .blog-card-content {
@@ -1172,7 +1171,7 @@
 
 .blog-read-more-link {
   font-size: 0.8rem;
-  font-weight: 400;
+  font-weight: 800;
   color: #692ca8;
 }
 
@@ -1326,7 +1325,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 400;
+  font-weight: 700;
   color: var(--white);
   transition: background-color 0.2s;
 }
@@ -1339,7 +1338,7 @@
   color: var(--white);
   font-size: 1.15rem;
   margin-bottom: 1.5rem;
-  font-weight: 400;
+  font-weight: 700;
   position: relative;
 }
 
@@ -2833,6 +2832,9 @@
   .editor-layout-grid {
     grid-template-columns: 1fr;
   }
+  .uc-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .uc-contact-grid {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -2916,12 +2918,11 @@
     padding: 4rem 0;
   }
   .about-image-montage {
-    height: 310px;
+    height: 280px;
   }
-  .img-primary { width: 190px; height: 190px; top: 0; left: 0; }
-  .img-secondary { width: 150px; height: 150px; top: 128px; left: 50px; }
-  .img-tertiary { width: 95px; height: 95px; top: 35px; right: 15px; }
-  .circle-image-decor { width: 60px; height: 60px; bottom: 15px; right: 10px; }
+  .img-primary { width: 180px; height: 180px; }
+  .img-secondary { width: 140px; height: 140px; }
+  .img-tertiary { width: 110px; height: 110px; }
   .about-founder-block {
     flex-direction: column;
     align-items: flex-start;
@@ -2931,6 +2932,13 @@
   /* --- Services --- */
   .services-section {
     padding: 4rem 0;
+  }
+  .uc-services-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .uc-svc-img-wrap img {
+    height: 140px;
   }
   .services-main-tabs {
     flex-wrap: wrap;
@@ -3088,6 +3096,9 @@
   .hero-section {
     padding: 2.5rem 0 5rem 0;
   }
+  .uc-services-grid {
+    grid-template-columns: 1fr;
+  }
   .uc-contact-cards {
     grid-template-columns: 1fr;
   }
@@ -3098,12 +3109,11 @@
     grid-template-columns: 1fr 1fr;
   }
   .about-image-montage {
-    height: 240px;
+    height: 220px;
   }
-  .img-primary { width: 145px; height: 145px; top: 0; left: 0; }
-  .img-secondary { width: 115px; height: 115px; top: 98px; left: 38px; }
-  .img-tertiary { width: 75px; height: 75px; top: 28px; right: 12px; }
-  .circle-image-decor { width: 48px; height: 48px; bottom: 12px; right: 8px; }
+  .img-primary { width: 140px; height: 140px; top: 5%; left: 5%; }
+  .img-secondary { width: 110px; height: 110px; }
+  .img-tertiary { width: 90px; height: 90px; }
   .auth-modal-box {
     padding: 1.8rem 1rem;
   }
@@ -3617,228 +3627,3 @@
   border: 1px solid #cbd5e1;
 }
 
-
-/* ==========================================================================
-   Offers & Discounts Section
-   ========================================================================== */
-.offers-section {
-  padding: 5rem 0;
-  background-color: var(--bg-light);
-}
-
-.offers-header {
-  margin-bottom: 1.8rem;
-}
-
-.offers-title {
-  font-size: 2rem;
-  font-weight: 400;
-  color: var(--secondary-color);
-  font-family: 'Outfit', sans-serif;
-}
-
-.offers-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
-}
-
-/* Individual offer card */
-.offer-card {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  min-height: 220px;
-  display: flex;
-  align-items: flex-end;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.offer-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.18);
-}
-
-.offer-card-img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.4s ease;
-}
-
-.offer-card:hover .offer-card-img {
-  transform: scale(1.04);
-}
-
-.offer-card-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-.offer-card-content {
-  position: relative;
-  z-index: 2;
-  padding: 1.5rem 1.6rem 1.8rem;
-  width: 100%;
-}
-
-.offer-card-title {
-  font-size: 1.35rem;
-  font-weight: 400;
-  color: #ffffff;
-  line-height: 1.3;
-  margin-bottom: 0.5rem;
-  font-family: 'Outfit', sans-serif;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
-}
-
-.offer-card-subtitle {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 1rem;
-  font-weight: 500;
-}
-
-.offer-card-btn {
-  display: inline-flex;
-  align-items: center;
-  background-color: #1c1c1c;
-  color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 400;
-  padding: 0.6rem 1.4rem;
-  border-radius: 8px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-  transition: background-color 0.2s, border-color 0.2s;
-  letter-spacing: 0.01em;
-}
-
-.offer-card-btn:hover {
-  background-color: #333;
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .offers-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .offers-section {
-    padding: 3rem 0;
-  }
-  .offers-grid {
-    grid-template-columns: 1fr;
-  }
-  .offer-card {
-    min-height: 200px;
-  }
-  .offer-card-title {
-    font-size: 1.15rem;
-  }
-}
-
-/* ==========================================================================
-   Admin — Offers Management Panel
-   ========================================================================== */
-.offers-admin-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.offer-admin-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 0.9rem 1.2rem;
-  box-shadow: var(--shadow-card);
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.offer-admin-card-left {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex: 1;
-  min-width: 0;
-}
-
-.offer-admin-thumb {
-  width: 72px;
-  height: 52px;
-  object-fit: cover;
-  border-radius: 8px;
-  flex-shrink: 0;
-}
-
-.offer-admin-title {
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--secondary-color);
-  margin-bottom: 2px;
-}
-
-.offer-admin-sub {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.offer-admin-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-shrink: 0;
-  flex-wrap: wrap;
-}
-
-.action-btn-edit {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.45rem 0.9rem;
-  background: #e0f2fe;
-  color: #0369a1;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  transition: background 0.15s;
-}
-.action-btn-edit:hover { background: #bae6fd; }
-
-.action-btn-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.45rem 0.9rem;
-  background: #f1f5f9;
-  color: #475569;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  transition: background 0.15s;
-}
-.action-btn-toggle:hover { background: #e2e8f0; }
-
-.action-btn-delete {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  padding: 0.45rem 0.9rem;
-  background: #fef2f2;
-  color: #dc2626;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  transition: background 0.15s;
-}
-.action-btn-delete:hover { background: #fee2e2; }

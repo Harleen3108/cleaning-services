@@ -1,13 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { apiCall } from '../utils/api';
-import { Star, SlidersHorizontal } from 'lucide-react';
+import { Star, ChevronRight, ChevronLeft, SlidersHorizontal } from 'lucide-react';
 
-// Deterministic, realistic-looking rating + review count per service card.
 const pseudoRating = (id = '') => {
   const n = String(id).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
-  const rating = ((46 + (n % 4)) / 10).toFixed(1); // 4.6 - 4.9
+  const rating = ((46 + (n % 4)) / 10).toFixed(1);
   const counts = ['1.2k', '860', '2.1k', '740', '1.5k', '990', '3.2k', '620'];
   return { rating, count: counts[n % counts.length] };
+};
+
+const pseudoDiscount = (id = '') => {
+  const n = String(id).split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+  if (n % 3 === 0) return '15% OFF';
+  if (n % 3 === 1) return null;
+  return '10% OFF';
 };
 
 const fallbackServices = [
@@ -25,21 +31,24 @@ const AllServices = ({ onSelectService }) => {
   const [categories, setCategories] = useState([]);
   const [activeFilter, setActiveFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const scrollRef = useRef(null);
+
+  const scroll = (dir) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: dir * 280, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      // Services
       let svcs = fallbackServices;
       try {
         const res = await apiCall('/services');
         if (res.success && res.data && res.data.length > 0) svcs = res.data;
-      } catch (err) {
-        // use fallback
-      }
+      } catch (err) {}
       setServices(svcs);
 
-      // Categories (admin-managed). Fall back to deriving from services.
       try {
         const catRes = await apiCall('/categories');
         if (catRes.success && catRes.data && catRes.data.length > 0) {
@@ -59,24 +68,24 @@ const AllServices = ({ onSelectService }) => {
     ? services
     : services.filter(s => s.category === activeFilter);
 
+  const handleFilterChange = (cat) => {
+    setActiveFilter(cat);
+    if (scrollRef.current) scrollRef.current.scrollLeft = 0;
+  };
+
   return (
     <section className="uc-allservices-section" id="all-services">
       <div className="container">
         <div className="uc-allsvc-header">
           <div className="uc-allsvc-heading">
-            <span className="section-label">ALL SERVICES</span>
             <h2 className="section-title">Explore our cleaning services</h2>
           </div>
 
-          {/* Category filter on the right */}
           <div className="uc-allsvc-filter">
-            <span className="uc-filter-label">
-              <SlidersHorizontal size={16} /> Filter by category
-            </span>
             <div className="uc-filter-pills">
               <button
                 className={`uc-filter-pill ${activeFilter === 'all' ? 'active' : ''}`}
-                onClick={() => setActiveFilter('all')}
+                onClick={() => handleFilterChange('all')}
               >
                 All
               </button>
@@ -84,7 +93,7 @@ const AllServices = ({ onSelectService }) => {
                 <button
                   key={cat}
                   className={`uc-filter-pill ${activeFilter === cat ? 'active' : ''}`}
-                  onClick={() => setActiveFilter(cat)}
+                  onClick={() => handleFilterChange(cat)}
                 >
                   {cat}
                 </button>
@@ -98,48 +107,55 @@ const AllServices = ({ onSelectService }) => {
         ) : filtered.length === 0 ? (
           <div className="loading-state">No services found in this category.</div>
         ) : (
-          <div className="uc-services-grid">
-            {filtered.map(s => {
-              const isSvcActive = s.isActive !== false;
-              const { rating, count } = pseudoRating(s._id);
-              const price = s.minPrice || s.price || 299;
-              const original = Math.round(price * 1.18);
-              return (
-                <div
-                  key={s._id}
-                  className={`uc-service-card ${!isSvcActive ? 'uc-svc-unavailable' : ''}`}
-                  onClick={() => isSvcActive && onSelectService(s)}
-                  role="button"
-                >
-                  <div className="uc-svc-img-wrap">
-                    <img src={s.image} alt={s.name} loading="lazy" />
-                    {s.category && <span className="uc-svc-cat-tag">{s.category}</span>}
-                    <span className={`uc-svc-badge ${isSvcActive ? 'badge-on' : 'badge-off'}`}>
-                      {isSvcActive ? 'Available' : 'Unavailable'}
-                    </span>
-                  </div>
-                  <div className="uc-svc-body">
-                    <h3 className="uc-svc-name">{s.name}</h3>
-                    <div className="uc-svc-rating">
-                      <Star size={15} fill="#1c1c1c" strokeWidth={0} />
-                      <span className="uc-svc-rating-val">{rating}</span>
-                      <span className="uc-svc-rating-count">({count})</span>
+          <div className="uc-scroll-rail-wrap">
+            <button className="uc-rail-arrow uc-rail-left" onClick={() => scroll(-1)} aria-label="Scroll left">
+              <ChevronLeft size={22} />
+            </button>
+
+            <div className="uc-services-grid" ref={scrollRef}>
+              {filtered.map(s => {
+                const isSvcActive = s.isActive !== false;
+                const { rating, count } = pseudoRating(s._id);
+                const price = s.minPrice || s.price || 299;
+                const original = Math.round(price * 1.18);
+                const discount = pseudoDiscount(s._id);
+                return (
+                  <div
+                    key={s._id}
+                    className={`uc-service-card ${!isSvcActive ? 'uc-svc-unavailable' : ''}`}
+                    onClick={() => isSvcActive && onSelectService(s)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <div className="uc-svc-img-wrap">
+                      <img src={s.image} alt={s.name} loading="lazy" />
+                      {discount && isSvcActive && (
+                        <span className="uc-discount-badge">{discount}</span>
+                      )}
+                      {!isSvcActive && (
+                        <span className="uc-unavail-badge">Unavailable</span>
+                      )}
                     </div>
-                    <div className="uc-svc-price">
-                      <span className="uc-price-now">₹{price.toLocaleString('en-IN')}</span>
-                      <span className="uc-price-old">₹{original.toLocaleString('en-IN')}</span>
+                    <div className="uc-svc-body">
+                      <h3 className="uc-svc-name">{s.name}</h3>
+                      <div className="uc-svc-rating">
+                        <Star size={13} fill="#f5a623" color="#f5a623" strokeWidth={0} />
+                        <span className="uc-svc-rating-val">{rating}</span>
+                        <span className="uc-svc-rating-count">({count})</span>
+                      </div>
+                      <div className="uc-svc-price">
+                        <span className="uc-price-now">₹{price.toLocaleString('en-IN')}</span>
+                        {discount && <span className="uc-price-old">₹{original.toLocaleString('en-IN')}</span>}
+                      </div>
                     </div>
-                    <button
-                      className="uc-svc-book-btn"
-                      disabled={!isSvcActive}
-                      onClick={(e) => { e.stopPropagation(); if (isSvcActive) onSelectService(s); }}
-                    >
-                      {isSvcActive ? 'Book now' : 'Unavailable'}
-                    </button>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+
+            <button className="uc-rail-arrow uc-rail-right" onClick={() => scroll(1)} aria-label="Scroll right">
+              <ChevronRight size={22} />
+            </button>
           </div>
         )}
       </div>

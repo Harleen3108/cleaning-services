@@ -4,6 +4,7 @@ import { apiCall } from './utils/api';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
+import Offers from './components/Offers';
 import Services from './components/Services';
 import AllServices from './components/AllServices';
 import Testimonials from './components/Testimonials';
@@ -180,6 +181,8 @@ const App = () => {
             <div id="about">
               <About onOpenBooking={handleQuickBook} />
             </div>
+
+            <Offers onOpenBooking={handleQuickBook} />
 
             <div id="services">
               <Services onSelectService={handleSelectServiceAndBook} />

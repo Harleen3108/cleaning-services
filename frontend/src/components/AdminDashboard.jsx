@@ -79,6 +79,11 @@ const AdminDashboard = () => {
   const [cmsSection, setCmsSection] = useState('hero');
   const [cmsData, setCmsData] = useState({});
 
+  // Offers State
+  const [offerItems, setOfferItems] = useState([]);
+  const [offerForm, setOfferForm] = useState({ title: '', subtitle: '', buttonText: 'Book now', image: '', bgColor: '#1c1c1c', isActive: true });
+  const [editingOfferId, setEditingOfferId] = useState(null);
+
   // Notifications State
   const [notifTargetUser, setNotifTargetUser] = useState('');
   const [notifTitle, setNotifTitle] = useState('');
@@ -210,6 +215,67 @@ const AdminDashboard = () => {
     }
   };
 
+  const loadOffers = async () => {
+    try {
+      const res = await apiCall('/cms/offers');
+      if (res.success && res.data && Array.isArray(res.data.items)) {
+        setOfferItems(res.data.items);
+      } else {
+        setOfferItems([]);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const saveOffers = async (items) => {
+    try {
+      await apiCall('/cms', 'POST', { section: 'offers', data: { items } });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleOfferAdd = async () => {
+    if (!offerForm.title.trim()) return;
+    const newItem = { ...offerForm, id: Date.now().toString() };
+    const updated = [...offerItems, newItem];
+    setOfferItems(updated);
+    await saveOffers(updated);
+    setOfferForm({ title: '', subtitle: '', buttonText: 'Book now', image: '', bgColor: '#1c1c1c', isActive: true });
+    setMessage('Offer added and saved!');
+    setTimeout(() => setMessage(''), 2500);
+  };
+
+  const handleOfferEdit = (item) => {
+    setEditingOfferId(item.id);
+    setOfferForm({ title: item.title, subtitle: item.subtitle || '', buttonText: item.buttonText || 'Book now', image: item.image || '', bgColor: item.bgColor || '#1c1c1c', isActive: item.isActive !== false });
+  };
+
+  const handleOfferUpdate = async () => {
+    const updated = offerItems.map(o => o.id === editingOfferId ? { ...o, ...offerForm } : o);
+    setOfferItems(updated);
+    await saveOffers(updated);
+    setEditingOfferId(null);
+    setOfferForm({ title: '', subtitle: '', buttonText: 'Book now', image: '', bgColor: '#1c1c1c', isActive: true });
+    setMessage('Offer updated!');
+    setTimeout(() => setMessage(''), 2500);
+  };
+
+  const handleOfferDelete = async (id) => {
+    const updated = offerItems.filter(o => o.id !== id);
+    setOfferItems(updated);
+    await saveOffers(updated);
+    setMessage('Offer deleted.');
+    setTimeout(() => setMessage(''), 2500);
+  };
+
+  const handleOfferToggle = async (id) => {
+    const updated = offerItems.map(o => o.id === id ? { ...o, isActive: !o.isActive } : o);
+    setOfferItems(updated);
+    await saveOffers(updated);
+  };
+
   const loadSettings = async () => {
     try {
       const res = await apiCall('/settings');
@@ -246,6 +312,7 @@ const AdminDashboard = () => {
     loadSEO();
     loadCMS();
     loadSettings();
+    loadOffers();
   }, []);
 
   useEffect(() => {
@@ -764,6 +831,9 @@ const AdminDashboard = () => {
             </button>
             <button className={activeTab === 'cms' ? 'sidebar-btn active' : 'sidebar-btn'} onClick={() => { setActiveTab('cms'); setMessage(''); setError(''); }}>
               <Layout size={16} /> <span>CMS Panel</span>
+            </button>
+            <button className={activeTab === 'offers' ? 'sidebar-btn active' : 'sidebar-btn'} onClick={() => { setActiveTab('offers'); loadOffers(); setMessage(''); setError(''); }}>
+              <Tag size={16} /> <span>Offers &amp; Deals</span>
             </button>
             <button className={activeTab === 'notifications' ? 'sidebar-btn active' : 'sidebar-btn'} onClick={() => { setActiveTab('notifications'); setMessage(''); setError(''); }}>
               <Bell size={16} /> <span>Dispatch Alerts</span>
@@ -1760,6 +1830,168 @@ const AdminDashboard = () => {
                   SAVE CMS SECTION CONTENT
                 </button>
               </form>
+            </div>
+          )}
+
+          {/* TAB: Offers & Deals */}
+          {activeTab === 'offers' && (
+            <div className="offers-admin-view">
+              <h2>Offers &amp; Discounts Manager</h2>
+              <p className="tab-desc">Add, edit, or remove promotional offer cards shown on the homepage below the About section.</p>
+
+              {/* Add / Edit Form */}
+              <div className="editor-form bg-dark-glass animate-scale-in" style={{ maxWidth: 640 }}>
+                <h3>{editingOfferId ? 'Edit Offer Card' : 'Add New Offer Card'}</h3>
+
+                <div className="form-group">
+                  <label>Offer Title (use \n for line break)</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="e.g. Sofa deep cleaning\nstarting at ₹599"
+                    value={offerForm.title}
+                    onChange={e => setOfferForm(f => ({ ...f, title: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Subtitle (optional)</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="e.g. Spa for women"
+                    value={offerForm.subtitle}
+                    onChange={e => setOfferForm(f => ({ ...f, subtitle: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Button Text</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="Book now"
+                    value={offerForm.buttonText}
+                    onChange={e => setOfferForm(f => ({ ...f, buttonText: e.target.value }))}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>Image URL</label>
+                  <input
+                    type="text"
+                    className="form-input"
+                    placeholder="https://images.unsplash.com/..."
+                    value={offerForm.image}
+                    onChange={e => setOfferForm(f => ({ ...f, image: e.target.value }))}
+                  />
+                  {offerForm.image && (
+                    <img src={offerForm.image} alt="preview" style={{ marginTop: 8, width: '100%', maxHeight: 140, objectFit: 'cover', borderRadius: 8 }} />
+                  )}
+                </div>
+
+                <div className="form-group-row">
+                  <div className="form-group">
+                    <label>Card Background Colour</label>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <input
+                        type="color"
+                        value={offerForm.bgColor}
+                        onChange={e => setOfferForm(f => ({ ...f, bgColor: e.target.value }))}
+                        style={{ width: 48, height: 40, borderRadius: 8, border: '1px solid #cbd5e1', cursor: 'pointer' }}
+                      />
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={offerForm.bgColor}
+                        onChange={e => setOfferForm(f => ({ ...f, bgColor: e.target.value }))}
+                        style={{ flex: 1 }}
+                        placeholder="#1c1c1c"
+                      />
+                    </div>
+                  </div>
+                  <div className="form-group" style={{ display: 'flex', alignItems: 'flex-end', paddingBottom: 2 }}>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', marginBottom: 0 }}>
+                      <input
+                        type="checkbox"
+                        className="big-checkbox"
+                        checked={offerForm.isActive}
+                        onChange={e => setOfferForm(f => ({ ...f, isActive: e.target.checked }))}
+                      />
+                      Active (visible on site)
+                    </label>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+                  {editingOfferId ? (
+                    <>
+                      <button className="editor-submit-btn" style={{ flex: 1 }} onClick={handleOfferUpdate}>
+                        UPDATE OFFER
+                      </button>
+                      <button
+                        className="editor-submit-btn"
+                        style={{ flex: 1, background: '#64748b' }}
+                        onClick={() => { setEditingOfferId(null); setOfferForm({ title: '', subtitle: '', buttonText: 'Book now', image: '', bgColor: '#1c1c1c', isActive: true }); }}
+                      >
+                        CANCEL
+                      </button>
+                    </>
+                  ) : (
+                    <button className="editor-submit-btn" style={{ flex: 1 }} onClick={handleOfferAdd}>
+                      + ADD OFFER CARD
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Existing Offers List */}
+              <div style={{ marginTop: 32 }}>
+                <h3 style={{ marginBottom: 16, fontSize: '1rem', fontWeight: 700, color: '#1c1c1c' }}>
+                  Current Offers ({offerItems.length})
+                </h3>
+                {offerItems.length === 0 ? (
+                  <p style={{ color: '#8c8c8c', fontSize: '0.9rem' }}>No offers yet. Add your first offer card above.</p>
+                ) : (
+                  <div className="offers-admin-list">
+                    {offerItems.map(offer => (
+                      <div key={offer.id} className="offer-admin-card" style={{ borderLeft: `4px solid ${offer.bgColor || '#692ca8'}`, opacity: offer.isActive === false ? 0.55 : 1 }}>
+                        <div className="offer-admin-card-left">
+                          {offer.image && (
+                            <img src={offer.image} alt={offer.title} className="offer-admin-thumb" />
+                          )}
+                          <div>
+                            <p className="offer-admin-title">{offer.title.replace(/\\n/g, ' · ')}</p>
+                            {offer.subtitle && <p className="offer-admin-sub">{offer.subtitle}</p>}
+                            <span className={offer.isActive !== false ? 'status-active-pill' : 'status-blocked-pill'} style={{ marginTop: 4, display: 'inline-flex' }}>
+                              <span className="status-pill-dot" /> {offer.isActive !== false ? 'Active' : 'Hidden'}
+                            </span>
+                          </div>
+                        </div>
+                        <div className="offer-admin-actions">
+                          <button className="action-btn-edit" onClick={() => handleOfferEdit(offer)}>
+                            <Edit size={15} /> Edit
+                          </button>
+                          <button
+                            className="action-btn-toggle"
+                            onClick={() => handleOfferToggle(offer.id)}
+                            title={offer.isActive !== false ? 'Hide offer' : 'Show offer'}
+                          >
+                            {offer.isActive !== false ? <XCircle size={15} /> : <CheckCircle size={15} />}
+                            {offer.isActive !== false ? 'Hide' : 'Show'}
+                          </button>
+                          <button className="action-btn-delete" onClick={() => handleOfferDelete(offer.id)}>
+                            <Trash2 size={15} /> Delete
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {message && <div className="success-msg margin-top-sm">{message}</div>}
+              {error && <div className="error-msg margin-top-sm">{error}</div>}
             </div>
           )}
 

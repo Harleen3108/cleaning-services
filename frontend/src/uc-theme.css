@@ -256,69 +256,157 @@ h1, h2, h3, h4, h5, h6 {
 .services-main-tabs { box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid var(--uc-line); }
 .main-tab-btn.active { background: var(--uc-purple); box-shadow: none; }
 
-/* Most booked services — UC photo cards */
-/* Horizontal scrolling card rail, sharp (square) edges */
+/* ===== UC-style service card rail ===== */
+.uc-scroll-rail-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Arrow scroll buttons */
+.uc-rail-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid var(--uc-line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  transition: box-shadow 0.18s, background 0.18s;
+  color: var(--uc-ink);
+  z-index: 2;
+}
+.uc-rail-arrow:hover { background: var(--uc-purple); color: #fff; border-color: var(--uc-purple); box-shadow: 0 4px 14px rgba(105,44,168,0.18); }
+
+/* Scrollable card strip */
 .uc-services-grid {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
-  margin-top: 1rem;
-  padding: 0.5rem 0.25rem 1.25rem;
+  padding: 0.5rem 0.25rem 1rem;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--uc-purple) #e8e8ee;
+  scrollbar-width: none; /* hide scrollbar — use arrows instead */
+  flex: 1;
 }
-.uc-services-grid::-webkit-scrollbar { height: 8px; }
-.uc-services-grid::-webkit-scrollbar-track { background: #e8e8ee; }
-.uc-services-grid::-webkit-scrollbar-thumb { background: var(--uc-purple); border-radius: 0; }
+.uc-services-grid::-webkit-scrollbar { display: none; height: 0; width: 0; }
+.uc-services-grid::-webkit-scrollbar-track { display: none; }
+.uc-services-grid::-webkit-scrollbar-thumb { display: none; }
 
+/* Individual card */
 .uc-service-card {
-  flex: 0 0 210px;
-  width: 210px;
+  flex: 0 0 240px;
+  width: 240px;
   scroll-snap-align: start;
   background: #fff;
-  border: 1px solid var(--uc-line);
-  border-radius: 0;
+  border: none;
+  border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
 }
-.uc-service-card:hover { box-shadow: 0 16px 38px rgba(0,0,0,0.12); transform: translateY(-4px); }
-.uc-svc-img-wrap { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--uc-soft); border-radius: 0; }
-.uc-svc-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s; }
-.uc-service-card:hover .uc-svc-img-wrap img { transform: scale(1.05); }
-.uc-svc-badge { position: absolute; top: 10px; left: 10px; font-size: 0.68rem; font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 0; }
-.uc-svc-badge.badge-on { background: #e7f7ee; color: #15803d; }
-.uc-svc-badge.badge-off { background: #fde8e8; color: #b91c1c; }
-.uc-svc-body { padding: 0.8rem 0.8rem 0.9rem; display: flex; flex-direction: column; gap: 0.35rem; }
-.uc-svc-name { font-size: 0.9rem; font-weight: 700; line-height: 1.3; color: var(--uc-ink); }
-.uc-svc-rating { display: flex; align-items: center; gap: 0.3rem; font-size: 0.8rem; }
-.uc-svc-rating-val { font-weight: 700; color: var(--uc-ink); }
-.uc-svc-rating-count { color: var(--uc-muted); }
-.uc-svc-price { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.05rem; }
-.uc-price-now { font-size: 0.95rem; font-weight: 800; color: var(--uc-ink); }
-.uc-price-old { font-size: 0.78rem; color: var(--uc-muted); text-decoration: line-through; }
-.uc-svc-book-btn {
-  margin-top: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 0;
-  border: 1px solid var(--uc-purple);
-  color: var(--uc-purple);
-  background: #fff;
-  font-weight: 700;
-  font-size: 0.8rem;
-  transition: all 0.2s;
+.uc-service-card:hover {
+  box-shadow: 0 10px 28px rgba(0,0,0,0.13);
+  transform: translateY(-3px);
 }
-.uc-svc-book-btn:hover { background: var(--uc-purple); color: #fff; }
-.uc-service-card.uc-svc-unavailable { opacity: 0.65; }
-.uc-service-card.uc-svc-unavailable .uc-svc-book-btn { border-color: var(--uc-line); color: var(--uc-muted); cursor: not-allowed; background: #fff; }
 
-@media (max-width: 560px) {
-  .uc-service-card { flex-basis: 78vw; width: 78vw; }
+/* Image area — square */
+.uc-svc-img-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--uc-soft);
+  border-radius: 12px 12px 0 0;
+}
+.uc-svc-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s;
+}
+.uc-service-card:hover .uc-svc-img-wrap img { transform: scale(1.06); }
+
+/* Discount badge — top-left on image */
+.uc-discount-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #1a6b3c;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.55rem;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+/* Unavailable badge */
+.uc-unavail-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.22rem 0.55rem;
+  border-radius: 4px;
+}
+
+/* Card body */
+.uc-svc-body {
+  padding: 0.85rem 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.uc-svc-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--uc-ink);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.uc-svc-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.28rem;
+  font-size: 0.8rem;
+  margin-top: 0.1rem;
+}
+.uc-svc-rating-val { font-weight: 600; color: var(--uc-ink); }
+.uc-svc-rating-count { color: var(--uc-muted); }
+.uc-svc-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-top: 0.15rem;
+}
+.uc-price-now { font-size: 0.95rem; font-weight: 700; color: var(--uc-ink); }
+.uc-price-old { font-size: 0.78rem; color: var(--uc-muted); text-decoration: line-through; }
+
+.uc-service-card.uc-svc-unavailable { opacity: 0.6; cursor: not-allowed; }
+
+@media (max-width: 768px) {
+  .uc-rail-arrow { display: none; }
+  .uc-service-card { flex: 0 0 200px; width: 200px; }
+}
+@media (max-width: 480px) {
+  .uc-service-card { flex: 0 0 76vw; width: 76vw; }
 }
 
 .uc-svc-cat-tag {
