@@ -32,11 +32,26 @@ const AllServices = ({ onSelectService }) => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [loading, setLoading] = useState(true);
   const scrollRef = useRef(null);
+  const dragState = useRef({ dragging: false, startX: 0, scrollLeft: 0 });
 
-  const scroll = (dir) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: dir * 280, behavior: 'smooth' });
-    }
+  // Drag-to-scroll handlers
+  const onMouseDown = (e) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    dragState.current = { dragging: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft };
+    el.classList.add('dragging');
+  };
+  const onMouseMove = (e) => {
+    if (!dragState.current.dragging) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    if (!el) return;
+    const x = e.pageX - el.offsetLeft;
+    el.scrollLeft = dragState.current.scrollLeft - (x - dragState.current.startX);
+  };
+  const onMouseUp = () => {
+    dragState.current.dragging = false;
+    scrollRef.current?.classList.remove('dragging');
   };
 
   useEffect(() => {
@@ -108,11 +123,14 @@ const AllServices = ({ onSelectService }) => {
           <div className="loading-state">No services found in this category.</div>
         ) : (
           <div className="uc-scroll-rail-wrap">
-            <button className="uc-rail-arrow uc-rail-left" onClick={() => scroll(-1)} aria-label="Scroll left">
-              <ChevronLeft size={22} />
-            </button>
-
-            <div className="uc-services-grid" ref={scrollRef}>
+            <div
+              className="uc-services-grid"
+              ref={scrollRef}
+              onMouseDown={onMouseDown}
+              onMouseMove={onMouseMove}
+              onMouseUp={onMouseUp}
+              onMouseLeave={onMouseUp}
+            >
               {filtered.map(s => {
                 const isSvcActive = s.isActive !== false;
                 const { rating, count } = pseudoRating(s._id);

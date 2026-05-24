@@ -15,7 +15,7 @@ const heroCategories = [
   { img: photo('1560518883-ce09059eeffa'), label: 'Bathroom Clean' },
 ];
 
-const Hero = ({ onOpenBooking }) => {
+const Hero = ({ onOpenBooking, onSelectCategory }) => {
   const [cmsData, setCmsData] = useState({
     badge: 'CLEANING SERVICES',
     title: 'Cleaning with Care Every Time',
@@ -56,7 +56,7 @@ const Hero = ({ onOpenBooking }) => {
             <span className="uc-panel-label">What are you looking for?</span>
             <div className="uc-category-tiles">
               {heroCategories.map((cat, i) => (
-                <button key={i} className="uc-category-tile" onClick={onOpenBooking}>
+                <button key={i} className="uc-category-tile" onClick={() => onSelectCategory ? onSelectCategory(cat.label) : onOpenBooking()}>
                   <span className="uc-tile-icon">
                     <img src={cat.img} alt={cat.label} loading="lazy" />
                   </span>

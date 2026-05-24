@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { apiCall } from '../utils/api';
-import { Star, ChevronRight, ChevronLeft } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 // Deterministic rating + review count
 const pseudoRating = (id = '') => {
@@ -76,11 +76,25 @@ const Services = ({ onSelectService }) => {
   const [activeCategory, setActiveCategory] = useState('');
   const [loadingCats, setLoadingCats] = useState(true);
   const scrollRef = useRef(null);
+  const dragState = useRef({ dragging: false, startX: 0, scrollLeft: 0 });
 
-  const scroll = (dir) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollBy({ left: dir * 280, behavior: 'smooth' });
-    }
+  const onMouseDown = (e) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    dragState.current = { dragging: true, startX: e.pageX - el.offsetLeft, scrollLeft: el.scrollLeft };
+    el.classList.add('dragging');
+  };
+  const onMouseMove = (e) => {
+    if (!dragState.current.dragging) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    if (!el) return;
+    const x = e.pageX - el.offsetLeft;
+    el.scrollLeft = dragState.current.scrollLeft - (x - dragState.current.startX);
+  };
+  const onMouseUp = () => {
+    dragState.current.dragging = false;
+    scrollRef.current?.classList.remove('dragging');
   };
 
   useEffect(() => {
@@ -154,13 +168,16 @@ const Services = ({ onSelectService }) => {
           </div>
         </div>
 
-        {/* Scrollable card rail with arrow buttons */}
+        {/* Scrollable card rail — drag to scroll */}
         <div className="uc-scroll-rail-wrap">
-          <button className="uc-rail-arrow uc-rail-left" onClick={() => scroll(-1)} aria-label="Scroll left">
-            <ChevronLeft size={22} />
-          </button>
-
-          <div className="uc-services-grid" ref={scrollRef}>
+          <div
+            className="uc-services-grid"
+            ref={scrollRef}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+          >
             {filteredServices.map(s => {
               const isSvcActive = s.isActive !== false;
               const { rating, count } = pseudoRating(s._id);
@@ -200,10 +217,6 @@ const Services = ({ onSelectService }) => {
               );
             })}
           </div>
-
-          <button className="uc-rail-arrow uc-rail-right" onClick={() => scroll(1)} aria-label="Scroll right">
-            <ChevronRight size={22} />
-          </button>
         </div>
       </div>
     </section>

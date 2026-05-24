@@ -16,6 +16,8 @@ import LoginModal from './components/LoginModal';
 import BookingModal from './components/BookingModal';
 import AdminDashboard from './components/AdminDashboard';
 import LocationGate from './components/LocationGate';
+import VideoPromo from './components/VideoPromo';
+import CategoryServicesPage from './components/CategoryServicesPage';
 import { getSelectedLocation, isServiceable } from './utils/locations';
 import { Calendar, MapPin, DollarSign, RefreshCw, AlertCircle } from 'lucide-react';
 
@@ -39,6 +41,9 @@ const App = () => {
   // User history bookings
   const [myBookings, setMyBookings] = useState([]);
   const [historyLoading, setHistoryLoading] = useState(false);
+
+  // Category browse state
+  const [browseCategory, setBrowseCategory] = useState(null);
 
   // Serviceable-location gating
   const [selectedLocation, setSelectedLocationState] = useState(getSelectedLocation());
@@ -157,6 +162,7 @@ const App = () => {
   // Safe tab change: prevent non-admins from accessing admin panel
   const handleSetCurrentTab = (tab) => {
     if (tab === 'admin' && !isAdmin) return;
+    setBrowseCategory(null); // reset category browse when switching tabs
     setCurrentTab(tab);
   };
 
@@ -174,13 +180,24 @@ const App = () => {
 
       {/* RENDER PAGES */}
       <main className="main-content">
-        {currentTab === 'home' && (
+        {currentTab === 'home' && browseCategory && (
+          <CategoryServicesPage
+            initialCategory={browseCategory}
+            onSelectService={handleSelectServiceAndBook}
+            onBack={() => setBrowseCategory(null)}
+          />
+        )}
+
+        {currentTab === 'home' && !browseCategory && (
           <div className="home-sections-flow">
-            <Hero onOpenBooking={handleQuickBook} />
+            <Hero onOpenBooking={handleQuickBook} onSelectCategory={(cat) => setBrowseCategory(cat)} />
             
             <div id="about">
               <About onOpenBooking={handleQuickBook} />
             </div>
+
+            {/* Explore our cleaning services - cards grid */}
+            <AllServices onSelectService={handleSelectServiceAndBook} />
 
             <Offers onOpenBooking={handleQuickBook} />
 
@@ -188,15 +205,8 @@ const App = () => {
               <Services onSelectService={handleSelectServiceAndBook} />
             </div>
 
-            {/* All admin-managed services with category filter */}
-            <AllServices onSelectService={handleSelectServiceAndBook} />
-
-            {/* Team section */}
-            <Team />
-
-            <div id="testimonials">
-              <Testimonials />
-            </div>
+            {/* Video promo banner */}
+            <VideoPromo onOpenBooking={handleQuickBook} />
 
             <div id="blog">
               <Blogs />

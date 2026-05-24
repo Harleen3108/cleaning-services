@@ -2839,7 +2839,8 @@
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }
-  .testimonials-grid {
+  .testimonials-grid,
+  .testimonials-grid--4col {
     grid-template-columns: repeat(2, 1fr);
   }
   .team-grid {
